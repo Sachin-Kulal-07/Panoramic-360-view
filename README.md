@@ -11,3 +11,7 @@ This project focuses on integrating 360° panoramic images captured from the fie
 
 The goal is to bridge the gap between field-collected visuals and GIS-based workflows, improving situational awareness and data accuracy.
 
+## Development
+This plugin is fully developed with QGIS and VS code environment and testing can be done though QGIS. 
+
+## Installation
