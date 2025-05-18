@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">A simple example</title>
+    <link rel="stylesheet" href="pannellum.css"/>
+    <script type="text/javascript" src="pannellum.js"></script>
+    <style>
+    body{
+        margin: 0px;
+    }
+    #panorama {
+        width: 100%;
+        height: 100vh;
+    }
+    </style>
+</head>
+<body>
+
+<div id="panorama"></div>
+<script>
+// Function to make an AJAX request
+function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'azimuth_data.json', true); // Path to your JSON file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            callback(JSON.parse(xobj.responseText));
+        }
+    };
+    xobj.send(null);
+}
+
+// Call the loadJSON function to fetch azimuth data
+loadJSON(function(response) {
+    // Extract the azimuth value
+    var azimuthValue = response.azimuth;
+    var yawValue = response.yaw_value;
+
+    // Calculate the northOffset value
+    var northOffsetValue = azimuthValue;
+
+    // Update the title with the northOffset value
+    document.getElementById('pageTitle').innerText = "Panoramic View";
+
+    // Initialize Pannellum viewer with the specified northOffset
+    pannellum.viewer('panorama', {
+        "type": "equirectangular",
+        "panorama": "image.jpg",
+        "autoLoad": true,
+        "compass": true,
+        "northOffset": northOffsetValue,
+        "yaw": yawValue
+    });
+});
+</script>
+
+</body>
+</html>
